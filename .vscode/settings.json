@@ -1,0 +1,3 @@
+{
+  "chat.agentSkillsLocations": [".github/skills", ".claude/skills", "skills"]
+}

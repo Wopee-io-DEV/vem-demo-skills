@@ -25,11 +25,13 @@
 - Install Node.js
 - Install Playwright
 - Clone the repo
+- Run `npm install`
+- Run `npx playwright install` (first time only)
 - Create a `.env` file using `.env.example` as a template
 
 ### Run locally using Playwright
 
-- Run `npm run tests`
+- Run `npm test`
 
 ## D) AIO Tests Integration
 

@@ -14,7 +14,7 @@ Use this skill to interact with the AIO Tests repository for retrieving, creatin
 
 ## API reference
 
-The complete API specification is available in the OpenAPI/Swagger file: [openapi.json](.github/skills/aio-tests/openapi.json)
+The complete API specification is available in the OpenAPI/Swagger file: [openapi.json](openapi.json)
 
 Refer to this file for detailed endpoint definitions, request/response schemas, and available operations.
 
@@ -23,12 +23,12 @@ Refer to this file for detailed endpoint definitions, request/response schemas, 
 To fetch tests from the AIO Tests repository, you can use the following curl command:
 
 ```bash
-AIO_TOKEN="YOUR_AIO_API_TOKEN"
+AIO_ACCESS_TOKEN="YOUR_AIO_API_TOKEN"
 JIRA_PROJECT_ID_OR_KEY="JIRA_PROJECT_ID_OR_KEY"
 
 curl -i -sS \
  -H "Accept: application/json" \
- -H "Authorization: AioAuth ${AIO_TOKEN}" \
+ -H "Authorization: AioAuth ${AIO_ACCESS_TOKEN}" \
   "https://tcms.aiojiraapps.com/aio-tcms/api/v1/project/${JIRA_PROJECT_ID_OR_KEY}/testcase?startAt=0&maxResults=100&needDataInRTF=false"
 ```
 
@@ -44,7 +44,7 @@ Query params:
 - `maxResults` default `100`. If value is less than 10 or more than 100, page size becomes 100.
 - `needDataInRTF` optional boolean (default false recommended for smaller payloads)
 
-AIO_API_TOKEN and JIRA_PROJECT_ID_OR_KEY can be found in the `.env` file.
+AIO_ACCESS_TOKEN and JIRA_PROJECT_ID_OR_KEY can be found in the `.env` file.
 Replace `YOUR_AIO_API_TOKEN` and `JIRA_PROJECT_ID_OR_KEY` with your actual token and project ID or key.
 
 When user does not specify output format, return list of test case names and IDs in markdown table format.
@@ -55,13 +55,13 @@ After that table, add information how many test cases were found in total.
 To create a new test case in the AIO Tests repository, use the following curl command:
 
 ```bash
-AIO_TOKEN="YOUR_AIO_API_TOKEN"
+AIO_ACCESS_TOKEN="YOUR_AIO_API_TOKEN"
 JIRA_PROJECT_ID_OR_KEY="JIRA_PROJECT_ID_OR_KEY"
 
 curl -i -sS -X POST \
  -H "Content-Type: application/json" \
  -H "Accept: application/json" \
- -H "Authorization: AioAuth ${AIO_TOKEN}" \
+ -H "Authorization: AioAuth ${AIO_ACCESS_TOKEN}" \
   -d '{
     "title": "Test case title"
   }' \
@@ -97,7 +97,7 @@ Status will default to "Draft" if not specified.
 curl -X POST \
  -H "Content-Type: application/json" \
  -H "Accept: application/json" \
- -H "Authorization: AioAuth ${AIO_TOKEN}" \
+ -H "Authorization: AioAuth ${AIO_ACCESS_TOKEN}" \
   -d '{"title":"Add 4 products into shopping cart"}' \
   "https://tcms.aiojiraapps.com/aio-tcms/api/v1/project/${JIRA_PROJECT_ID_OR_KEY}/testcase"
 ```
@@ -116,14 +116,14 @@ The response will include the created test case details including its ID and key
 To update an existing test case, use the following curl command:
 
 ```bash
-AIO_TOKEN="YOUR_AIO_API_TOKEN"
+AIO_ACCESS_TOKEN="YOUR_AIO_API_TOKEN"
 JIRA_PROJECT_ID_OR_KEY="JIRA_PROJECT_ID_OR_KEY"
 TEST_CASE_ID="12345"
 
 curl -i -sS -X PUT \
  -H "Content-Type: application/json" \
  -H "Accept: application/json" \
- -H "Authorization: AioAuth ${AIO_TOKEN}" \
+ -H "Authorization: AioAuth ${AIO_ACCESS_TOKEN}" \
   -d '{
     "title": "Updated test case title",
     "description": "Updated description"
@@ -160,7 +160,7 @@ The response will include the updated test case details.
 ## Context and constraints
 
 - Environment variables are in `.env`. Never print the token back to the user.
-  - `AIO_TOKEN`
+  - `AIO_ACCESS_TOKEN`
   - `JIRA_PROJECT_ID_OR_KEY`
 - The Cases endpoints are defined in Swagger. Use the exact paths and schemas from the Swagger "API Reference".
 - **ALWAYS use `title` field for test case name, not `name`**
